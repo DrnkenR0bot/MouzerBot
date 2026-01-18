@@ -26,4 +26,5 @@ Simple two-wheel ultrasonic guided roaming robot. The primary goal of this robot
 
 ![KB2040 pinout](/references/Adafruit_KB2040_Pinout.png) 
 
-![Fritzing wiring diagram]("/wiring diagram_bb.png")
+![Fritzing wiring diagram](/wiring_diagram_bb.png) 
+
