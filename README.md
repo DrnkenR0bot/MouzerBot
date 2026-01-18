@@ -5,7 +5,6 @@ Simple two-wheel ultrasonic guided roaming robot. The primary goal of this robot
 1. Two off-center wheels powered by independant DC motors. Allows for forward, reverse, and turn by differential rotation.
 1. Forward mounted eye is an HC-SR04 ultrasonic range finder. In place rotation enables mapping in all directions for obstacles. 
 1. Control hardware is a basic KB2040 microcontroller and DRV8833 DC Motor controller. 
-1. Adding an accelerometer or IMU may be a good way to start exploring room mapping and path setting from memory. 
 
 ## Behavior
 1. The primary goal of this robot is to give the appearance of complex thinking with the minimum set of hardware and software. 
@@ -16,4 +15,9 @@ Simple two-wheel ultrasonic guided roaming robot. The primary goal of this robot
 ## Hardware
 | _Component_ | _Role_ | _Quantity_ |
 |-|-|-|
+|3D printed enclosure| body|1|
 |KB2040 | brain | 1|
+|HC-SR04 | ultrasonic distance sensor |1|
+|DRV8833 | DC Motor controller |1|
+|3D printed wheels| mobility |2|
+
