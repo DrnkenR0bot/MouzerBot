@@ -21,3 +21,7 @@ Simple two-wheel ultrasonic guided roaming robot. The primary goal of this robot
 |DRV8833 | DC Motor controller |1|
 |3D printed wheels| mobility |2|
 
+## References
+
+![KB2040 pinout](/references/Adafruit_KB2040_Pinout.png) 
+
