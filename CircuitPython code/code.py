@@ -4,6 +4,11 @@ import adafruit_hcsr04
 from time import sleep
 from motor_dr import Motor, Loco
 
+# Initialize test button
+button = digitalio.DigitalInOut(board.D9)
+button.direction = digitalio.Direction.INPUT
+button_pressed = button.value
+
 # Initialize sonar
 sonar = adafruit_hcsr04.HCSR04(trigger_pin=board.A3, echo_pin=board.A2)
 
@@ -73,14 +78,17 @@ def basic_avoidance(speed=0.5, between_readings=0.1, standoff=10.e-2):
                 loco.forward(speed=speed)
                 sleep(between_readings)
             else:
-                loco.backward(speed=0.5*speed)
-                sleep(2)
                 loco.stop()
+                sleep(0.01)
         except KeyboardInterrupt:
             break
+    print("Interrupt detected.")
 
 
 if __name__ == "__main__":
-    drive_test()
-    #distance_test()
-    #basic_avoidance(speed=1)
+    if button_pressed:
+        print("--- Initiating test sequence ---")
+        drive_test()
+        distance_test()
+    else:
+        basic_avoidance(speed=1)
