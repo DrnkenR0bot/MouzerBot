@@ -29,9 +29,9 @@ SLP.switch_to_output()
 SLP.value = True
 
 
-def drive_test(drive_speed: float, turn_speed: float):
+def drive_test(drive_speed: float = 1, turn_speed: float = 0.8):
     print("Initiating drive test...")
-    sleep(5)
+    sleep(1)
 
     loco.forward(speed=drive_speed)
     sleep(1)
@@ -56,7 +56,7 @@ def drive_test(drive_speed: float, turn_speed: float):
 
 def distance_test():
     print("Initiating sonar test, KeyboardInterrupt to stop...")
-    sleep(3)
+    sleep(1)
     while True:
         try:
             print(distance())
@@ -64,7 +64,23 @@ def distance_test():
         except KeyboardInterrupt:
             break
 
+def basic_avoidance(speed=0.5, between_readings=0.1, standoff=10.e-2):
+    print("Initiating basic avoidance test, KeyboardInterrupt to stop...")
+    sleep(1)
+    while True:
+        try:
+            while distance() > standoff:
+                loco.forward(speed=speed)
+                sleep(between_readings)
+            else:
+                loco.backward(speed=0.5*speed)
+                sleep(2)
+                loco.stop()
+        except KeyboardInterrupt:
+            break
+
 
 if __name__ == "__main__":
-    drive_test(0.5, 0.25)
-    distance_test()
+    drive_test()
+    #distance_test()
+    #basic_avoidance(speed=1)
