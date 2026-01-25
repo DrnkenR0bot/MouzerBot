@@ -20,7 +20,6 @@ Simple two-wheel ultrasonic guided roaming robot. The primary goal of this robot
 |[HC-SR04](https://learn.adafruit.com/ultrasonic-sonar-distance-sensors?view=all) | ultrasonic distance sensor |1|
 |[DRV8833](https://learn.adafruit.com/adafruit-drv8833-dc-stepper-motor-driver-breakout-board?view=all) | DC Motor controller |1|
 |3D printed wheels| mobility |2|
-|[TPS61023 boost converter](https://www.adafruit.com/product/4654)| microcontroller power| 1|
 
 ## References
 
