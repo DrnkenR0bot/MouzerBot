@@ -1,12 +1,15 @@
 import board
 import digitalio
 import adafruit_hcsr04
+import random
+import time
 from time import sleep
 from motor_dr import Motor, Loco
 
 # Initialize test button
 button = digitalio.DigitalInOut(board.D9)
 button.direction = digitalio.Direction.INPUT
+button.pull = digitalio.Pull.DOWN
 button_pressed = button.value
 
 # Initialize sonar
@@ -19,6 +22,19 @@ def distance(cm2xscale=1e-2):
     :param cm2xscale: Use to scale from native cm to any units. Default is meters (1e-2).
     """
     return sonar.distance*cm2xscale
+
+def proximity(proximity_distance = 5.e-2):
+    """
+    Return True if distance to object < proximity_distance.
+    
+    :param proximity_distance: Trigger distance from ultrasonic sensor in meters.
+    """
+    sleep(0.01) # Need a little sleep time between proximity checks for sensor response.
+    if distance() < proximity_distance:
+        print("PROXIMITY!")
+        return True
+    else:
+        return False
 
 # Initialize left and right motors
 left_motor = Motor(board.D2, board.D3)
@@ -84,6 +100,35 @@ def basic_avoidance(speed=0.5, between_readings=0.1, standoff=10.e-2):
             break
     print("Interrupt detected.")
 
+def roam(speed=1):
+    """
+    Roam around via random walk. Avoid obstacles.
+    
+    :param speed: max speed of motors, <= 1.
+    """        
+    def bump(speed=0.5):
+        """
+        Action to perform if proximity detected.
+
+        :param speed: max speed of motors, <= 1.
+        """
+        turn_speed = 0.5*speed
+        loco.stop()
+        loco.backward(speed=speed)
+        sleep(3*random.random())
+        loco.stop()
+        turn_direction = random.getrandbits(1) # 0 = left, 1 = right
+        turn_time = 0.5 + 3*random.random()
+        if turn_direction == 0:
+            loco.left_turn(speed=turn_speed, turn_time=turn_time)
+        else:
+            loco.right_turn(speed=turn_speed, turn_time=turn_time)
+
+    while True:
+        loco.forward(speed=speed)
+        if proximity():
+            bump(speed=0.8*speed)
+
 
 if __name__ == "__main__":
     if button_pressed:
@@ -91,4 +136,5 @@ if __name__ == "__main__":
         drive_test()
         distance_test()
     else:
-        basic_avoidance(speed=1)
+        #basic_avoidance(speed=1)
+        roam(speed=1)
