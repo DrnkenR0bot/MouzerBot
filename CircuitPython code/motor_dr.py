@@ -23,6 +23,7 @@ class Motor:
         self.IN1.duty_cycle = 0
         self.IN2.duty_cycle = int(self.max_duty_cycle*speed)
 
+
 class Loco:
     def __init__(self, left_motor: Motor, right_motor: Motor):
         self.left_motor = left_motor
@@ -59,4 +60,13 @@ class Loco:
         self.right_motor.forward(speed=speed)
         time.sleep(turn_time)
         self.stop()
+
+    def ramp_forward(self, max_speed: float = 1.0, time_duration: float = 0.5, steps: int = 20):
+        self.stop()
+        interval = time_duration/steps
+        new_speed = 0.
+        for i in range(steps):
+            new_speed = new_speed + max_speed/steps
+            self.forward(speed=new_speed)
+            time.sleep(interval)
 
