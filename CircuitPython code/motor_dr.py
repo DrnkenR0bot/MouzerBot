@@ -1,6 +1,7 @@
 """
 DrnkenR0bot DC motor library for 2 motor locomotion.
 """
+import time
 import pwmio
 
 class Motor:
@@ -46,4 +47,16 @@ class Loco:
     def left_spin(self, speed: float = 0.25):
         self.left_motor.backward(speed=speed)
         self.right_motor.forward(speed=speed)
+
+    def right_turn(self, speed: float = 0.25, turn_time: float = 1):
+        self.left_motor.forward(speed=speed)
+        self.right_motor.backward(speed=speed)
+        time.sleep(turn_time)
+        self.stop()
+
+    def left_turn(self, speed: float = 0.25, turn_time: float = 1):
+        self.left_motor.backward(speed=speed)
+        self.right_motor.forward(speed=speed)
+        time.sleep(turn_time)
+        self.stop()
 
