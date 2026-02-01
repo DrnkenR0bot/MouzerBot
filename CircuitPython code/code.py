@@ -2,15 +2,8 @@ import board
 import digitalio
 import adafruit_hcsr04
 import random
-import time
 from time import sleep
 from motor_dr import Motor, Loco
-
-# Initialize test button
-button = digitalio.DigitalInOut(board.D9)
-button.direction = digitalio.Direction.INPUT
-button.pull = digitalio.Pull.DOWN
-button_pressed = button.value
 
 # Initialize sonar
 sonar = adafruit_hcsr04.HCSR04(trigger_pin=board.A3, echo_pin=board.A2)
@@ -131,10 +124,5 @@ def roam(speed=1, proximity_distance=10.e-2, bump_scale=1.0):
 
 
 if __name__ == "__main__":
-    if button_pressed:
-        print("--- Initiating test sequence ---")
-        drive_test()
-        distance_test()
-    else:
-        #basic_avoidance(speed=1)
-        roam(speed=0.8, proximity_distance=20.e-2)
+    #basic_avoidance(speed=1)
+    roam(speed=0.8, proximity_distance=20.e-2)
