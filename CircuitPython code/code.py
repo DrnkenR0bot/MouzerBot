@@ -100,7 +100,7 @@ def basic_avoidance(speed=0.5, between_readings=0.1, standoff=10.e-2):
             break
     print("Interrupt detected.")
 
-def roam(speed=1):
+def roam(speed=1, proximity_distance=10.e-2, bump_scale=1.0):
     """
     Roam around via random walk. Avoid obstacles.
     
@@ -112,7 +112,7 @@ def roam(speed=1):
 
         :param speed: max speed of motors, <= 1.
         """
-        turn_speed = 0.5*speed
+        turn_speed = speed
         loco.stop()
         loco.backward(speed=speed)
         sleep(3*random.random())
@@ -126,8 +126,8 @@ def roam(speed=1):
 
     while True:
         loco.forward(speed=speed)
-        if proximity():
-            bump(speed=0.8*speed)
+        if proximity(proximity_distance=proximity_distance):
+            bump(speed=bump_scale*speed)
 
 
 if __name__ == "__main__":
@@ -137,4 +137,4 @@ if __name__ == "__main__":
         distance_test()
     else:
         #basic_avoidance(speed=1)
-        roam(speed=1)
+        roam(speed=0.8, proximity_distance=20.e-2)
